@@ -1,4 +1,4 @@
-package java.bag;
+package javaDataStructures.bag;
 
 public class ArrayBag<T> implements BagInterface<T> {
 	protected T[] bag;

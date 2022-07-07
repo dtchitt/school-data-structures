@@ -1,10 +1,10 @@
-package java.bag;
+package javaDataStructures.bag;
 
 import java.util.Arrays;
 
 public class ResizeableArrayBag<T> extends ArrayBag<T> {
 	public ResizeableArrayBag() {
-		this(DEFAULT_CAPACITY); // calls the more specific constructor
+		super(DEFAULT_CAPACITY); // calls the more specific constructor
 	}
 
 	public ResizeableArrayBag(int capacity) {
@@ -25,7 +25,6 @@ public class ResizeableArrayBag<T> extends ArrayBag<T> {
 	}
 
 	private void resize() {
-
 		int newLength = 2 * bag.length;
 		checkCapacity(newLength);
 		this.bag = Arrays.copyOf(bag, newLength);

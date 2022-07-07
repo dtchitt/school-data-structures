@@ -1,6 +1,6 @@
-package java.bag;
+package javaDataStructures.bag;
 
-import java.common.Node;
+import javaDataStructures.common.Node;
 
 public class LinkedChainBag<T> implements BagInterface<T> {
 	private Node<T> firstNode;
@@ -31,17 +31,20 @@ public class LinkedChainBag<T> implements BagInterface<T> {
 		Node<T> newNode = new Node<T>(newEntry);
 		newNode.setNextNode(this.firstNode);
 
-		return false;
+		this.firstNode = newNode;
+		this.numberOfEntries++;
+
+		return true;
 	}
 
 	@Override
 	public T remove() {
 		T result = null;
 
-		if (firstNode != null) {
-			result = firstNode.getData();
-			firstNode = firstNode.getNextNode();
-			numberOfEntries--;
+		if (this.firstNode != null) {
+			result = this.firstNode.getData();
+			this.firstNode = this.firstNode.getNextNode();
+			this.numberOfEntries--;
 		}
 
 		return result;
@@ -51,16 +54,15 @@ public class LinkedChainBag<T> implements BagInterface<T> {
 	public boolean remove(T anEntry) {
 		boolean result = false;
 		Node<T> nodeN = getReferenceTo(anEntry);
-		if (nodeN != null) {
-			// Replace located entry with entry in first node
-			nodeN.setData(firstNode.getData());
-			// Remove first node
-			firstNode = firstNode.getNextNode();
-			numberOfEntries--;
-			result = true;
-		} // end if
-		return result;
 
+		if (nodeN != null) {
+			nodeN.setData(this.firstNode.getData());
+			this.firstNode = this.firstNode.getNextNode();
+			this.numberOfEntries--;
+			result = true;
+		}
+
+		return result;
 	}
 
 	@Override
@@ -72,25 +74,58 @@ public class LinkedChainBag<T> implements BagInterface<T> {
 
 	@Override
 	public int getFrequencyOf(T anEntry) {
-		// TODO Auto-generated method stub
-		return 0;
+		int frequency = 0;
+		int counter = 0;
+		Node<T> currNode = this.firstNode;
+
+		while ((counter < this.numberOfEntries) && currNode != null) {
+			if (anEntry.equals(currNode.getData())) {
+				frequency++;
+			}
+
+			counter++;
+			currNode = currNode.getNextNode();
+		}
+
+		return frequency;
 	}
 
 	@Override
 	public boolean cotains(T anEntry) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean found = false;
+		Node<T> curNode = this.firstNode;
+
+		while (!found && curNode != null) {
+			if (anEntry.equals(curNode.getData())) {
+				found = true;
+			} else {
+				curNode = curNode.getNextNode();
+			}
+		}
+		
+		return found;
 	}
 
 	@Override
 	public T[] toArray() {
-		// TODO Auto-generated method stub
-		return null;
+		@SuppressWarnings("unchecked")
+		T[] result = (T[])new Object[this.numberOfEntries];
+
+		int index = 0;
+		Node<T> curNode = this.firstNode;
+
+		while (index < this.numberOfEntries && curNode != null) {
+			result[index] = curNode.getData();
+			index++;
+			curNode = curNode.getNextNode();
+		}
+
+		return result;
 	}
 
 	private Node<T> getReferenceTo(T anEntry) {
 		boolean found = false;
-		Node<T> currentNode = firstNode;
+		Node<T> currentNode = this.firstNode;
 
 		while (!found && (currentNode != null)) {
 			if (anEntry.equals(currentNode.getData()))

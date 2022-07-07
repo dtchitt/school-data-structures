@@ -1,4 +1,4 @@
-package java.bag;
+package javaDataStructures.bag;
 
 /**
  * Interface for generic bag ds

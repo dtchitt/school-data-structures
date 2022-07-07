@@ -1,4 +1,4 @@
-package java.common;
+package javaDataStructures.common;
 
 public class Node<T> {
 	private T data;
