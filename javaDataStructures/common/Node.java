@@ -1,5 +1,9 @@
 package javaDataStructures.common;
 
+/**
+ * Node - Used for linked chain data structures.
+ * This will produce a singly linked chain
+ */
 public class Node<T> {
 	private T data;
 	private Node<T> next;
